@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>404 — Under Construction</title>
+<style>
+  :root{
+    --bg: #0a0d12;
+    --bg-panel: #10141b;
+    --line: #1e2530;
+    --green: #3fd97f;
+    --amber: #f0a840;
+    --red: #ff5f56;
+    --text: #d7dde5;
+    --muted: #6b7688;
+    --white: #f4f7fa;
+  }
+
+  *{ box-sizing:border-box; }
+
+  html,body{
+    margin:0;
+    padding:0;
+    min-height:100vh;
+    background:
+      radial-gradient(1200px 600px at 15% -10%, rgba(63,217,127,0.06), transparent 60%),
+      radial-gradient(900px 500px at 100% 110%, rgba(240,168,64,0.05), transparent 60%),
+      var(--bg);
+    color: var(--text);
+    font-family: 'JetBrains Mono','Fira Code',ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    padding: 32px 16px;
+  }
+
+  .crt::before{
+    content:"";
+    position:fixed;
+    inset:0;
+    pointer-events:none;
+    background: repeating-linear-gradient(
+      to bottom,
+      rgba(255,255,255,0.015) 0px,
+      rgba(255,255,255,0.015) 1px,
+      transparent 1px,
+      transparent 3px
+    );
+    mix-blend-mode: overlay;
+  }
+
+  .window{
+    width:100%;
+    max-width: 720px;
+    background: var(--bg-panel);
+    border: 1px solid var(--line);
+    border-radius: 10px;
+    box-shadow: 0 30px 80px -20px rgba(0,0,0,0.6), 0 0 0 1px rgba(255,255,255,0.02);
+    overflow: hidden;
+  }
+
+  .titlebar{
+    display:flex;
+    align-items:center;
+    gap:10px;
+    padding: 10px 14px;
+    background: #0d1117;
+    border-bottom: 1px solid var(--line);
+  }
+
+  .dot{ width:11px; height:11px; border-radius:50%; }
+  .dot.r{ background:#ff5f56; }
+  .dot.y{ background:#ffbd2e; }
+  .dot.g{ background:#27c93f; }
+
+  .titlebar span.path{
+    margin-left: 10px;
+    font-size: 12px;
+    color: var(--muted);
+    letter-spacing: 0.2px;
+  }
+
+  .term{
+    padding: 26px 26px 22px;
+    font-size: 13.5px;
+    line-height: 1.65;
+  }
+
+  .prompt{ color: var(--muted); }
+  .cmd{ color: var(--white); }
+  .ok{ color: var(--green); }
+  .warn{ color: var(--amber); }
+  .err{ color: var(--red); }
+  .dim{ color: var(--muted); }
+
+  .hero{
+    margin: 18px 0 20px;
+    line-height: 1.1;
+  }
+
+  .hero .code{
+    font-size: clamp(46px, 11vw, 78px);
+    font-weight: 800;
+    letter-spacing: -1px;
+    background: linear-gradient(120deg, var(--white) 0%, var(--green) 55%, var(--amber) 100%);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+  }
+
+  .hero .sub{
+    margin-top: 6px;
+    font-size: 14px;
+    color: var(--muted);
+  }
+
+  .barwrap{
+    margin: 22px 0 6px;
+    border: 1px solid var(--line);
+    border-radius: 6px;
+    background: #0c1016;
+    height: 20px;
+    overflow: hidden;
+    position: relative;
+  }
+
+  .bar{
+    height: 100%;
+    width: 0%;
+    background: repeating-linear-gradient(
+      45deg,
+      var(--green) 0 10px,
+      #2fb867 10px 20px
+    );
+    animation: fill 3.6s ease-in-out infinite;
+  }
+
+  @keyframes fill{
+    0%   { width: 4%; }
+    45%  { width: 62%; }
+    70%  { width: 71%; }
+    100% { width: 74%; }
+  }
+
+  .barlabel{
+    margin-top: 8px;
+    font-size: 12px;
+    color: var(--muted);
+    display:flex;
+    justify-content: space-between;
+  }
+
+  .cursor{
+    display:inline-block;
+    width: 8px;
+    height: 15px;
+    background: var(--green);
+    vertical-align: -2px;
+    animation: blink 1s step-end infinite;
+  }
+
+  @keyframes blink{
+    0%, 49%{ opacity:1; }
+    50%, 100%{ opacity:0; }
+  }
+
+  .footer{
+    margin-top: 22px;
+    padding-top: 14px;
+    border-top: 1px dashed var(--line);
+    font-size: 12px;
+    color: var(--muted);
+    display:flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 8px;
+  }
+
+  a.retry{
+    color: var(--amber);
+    text-decoration: none;
+    border-bottom: 1px dashed var(--amber);
+  }
+  a.retry:hover{ color: var(--white); border-color: var(--white); }
+
+  @media (max-width:480px){
+    .term{ padding: 20px 16px; }
+    .footer{ flex-direction: column; }
+  }
+
+  @media (prefers-reduced-motion: reduce){
+    .bar{ animation: none; width: 70%; }
+    .cursor{ animation: none; opacity:1; }
+  }
+</style>
+</head>
+<body class="crt">
+
+  <div class="window">
+    <div class="titlebar">
+      <div class="dot r"></div>
+      <div class="dot y"></div>
+      <div class="dot g"></div>
+      <span class="path">~/build/output.log</span>
+    </div>
+
+    <div class="term">
+      <div><span class="prompt">$</span> <span class="cmd">curl -I https://halaman-ini/</span></div>
+      <div class="err">HTTP/1.1 404 Not Found</div>
+      <div class="dim">x-status: route belum di-flash ke server</div>
+
+      <div class="hero">
+        <div class="code">404</div>
+        <div class="sub">Halaman ini belum masuk build. Masih dalam tahap <span class="ok">WIP</span> — cek log di bawah.</div>
+      </div>
+
+      <div><span class="prompt">$</span> <span class="cmd">make halaman-ini</span></div>
+      <div class="warn">[ 12%] Menyusun struktur konten...</div>
+      <div class="warn">[ 47%] Memasang komponen UI...</div>
+      <div class="ok">[ 74%] Sedang dikerjakan<span class="cursor"></span></div>
+
+      <div class="barwrap"><div class="bar"></div></div>
+      <div class="barlabel">
+        <span>BUILD IN PROGRESS</span>
+        <span>UNDER CONSTRUCTION</span>
+      </div>
+
+      <div class="footer">
+        <span>exit code: <span class="warn">pending</span></span>
+        <a class="retry" href="javascript:location.reload()">↻ rebuild halaman</a>
+      </div>
+    </div>
+  </div>
+
+</body>
+</html>
