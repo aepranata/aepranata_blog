@@ -22,7 +22,9 @@
   html,body{
     margin:0;
     padding:0;
-    min-height:100vh;
+    height:100vh;
+    width:100vw;
+    overflow:hidden;
     background:
       radial-gradient(1200px 600px at 15% -10%, rgba(63,217,127,0.06), transparent 60%),
       radial-gradient(900px 500px at 100% 110%, rgba(240,168,64,0.05), transparent 60%),
@@ -32,7 +34,7 @@
     display:flex;
     align-items:center;
     justify-content:center;
-    padding: 32px 16px;
+    padding: 16px;
   }
 
   .crt::before{
@@ -53,11 +55,14 @@
   .window{
     width:100%;
     max-width: 720px;
+    max-height: 100%;
     background: var(--bg-panel);
     border: 1px solid var(--line);
     border-radius: 10px;
     box-shadow: 0 30px 80px -20px rgba(0,0,0,0.6), 0 0 0 1px rgba(255,255,255,0.02);
     overflow: hidden;
+    display:flex;
+    flex-direction:column;
   }
 
   .titlebar{
@@ -82,9 +87,10 @@
   }
 
   .term{
-    padding: 26px 26px 22px;
-    font-size: 13.5px;
-    line-height: 1.65;
+    padding: clamp(14px, 3vh, 26px) 26px clamp(12px, 2.5vh, 22px);
+    font-size: clamp(11px, 1.6vh, 13.5px);
+    line-height: 1.55;
+    overflow: hidden;
   }
 
   .prompt{ color: var(--muted); }
@@ -95,12 +101,12 @@
   .dim{ color: var(--muted); }
 
   .hero{
-    margin: 18px 0 20px;
+    margin: clamp(10px, 2vh, 18px) 0 clamp(10px, 2vh, 20px);
     line-height: 1.1;
   }
 
   .hero .code{
-    font-size: clamp(46px, 11vw, 78px);
+    font-size: clamp(36px, 8vh, 78px);
     font-weight: 800;
     letter-spacing: -1px;
     background: linear-gradient(120deg, var(--white) 0%, var(--green) 55%, var(--amber) 100%);
@@ -111,7 +117,7 @@
 
   .hero .sub{
     margin-top: 6px;
-    font-size: 14px;
+    font-size: clamp(11px, 1.6vh, 14px);
     color: var(--muted);
   }
 
