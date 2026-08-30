@@ -407,7 +407,7 @@
 
 <nav>
   <div class="wrap">
-    <div class="brand">A³<span>-Project</span></div>
+    <div class="brand">A³<span> Project</span></div>
     <div class="nav-right">
       <div id="nav-label">Blog</div>
       <button class="theme-toggle" id="theme-toggle" title="Ganti tema" onclick="toggleTheme()">
@@ -454,7 +454,7 @@
     </div>
 
     <div class="cta-row">
-      <a href="#log" class="btn btn-primary" id="btn-download">↓ Unduh build terbaru</a>
+      <a href="#log" class="btn btn-primary" id="btn-download">↓ Unduh terbaru</a>
       <a href="https://t.me/a3discussion" class="btn btn-ghost" id="btn-telegram">Gabung Telegram</a>
     </div>
   </div>
@@ -476,9 +476,8 @@
 <footer>
   <div class="wrap">
     <div class="footer-links">
-      <a href="#">GitHub</a>
-      <a href="#">Telegram</a>
-      <a href="#">XDA</a>
+      <a href="https://github.com/aepranata">GitHub</a>
+      <a href="https://t.me/a3discussion">Telegram</a>
     </div>
     <div id="footer-tagline">ForgeOS — dibangun komunitas, untuk semua perangkat.</div>
   </div>
@@ -488,32 +487,32 @@
   /* ---------- I18N ---------- */
   const I18N = {
     id: {
-      navLabel: 'log update',
-      eyebrow: 'Riwayat rilis',
-      heroTitle: 'Semua update, terurut dari yang terbaru',
-      heroDesc: 'Setiap build, hotfix, dan perubahan ForgeOS tercatat di sini — urut berdasarkan tanggal rilis.',
-      btnDownload: '↓ Unduh build terbaru',
-      btnTelegram: 'Gabung Telegram',
+      navLabel: 'Blog',
+      eyebrow: 'A³-Project',
+      heroTitle: 'Simple, stable, always evolving.',
+      heroDesc: 'Temukan berita terbaru, update ROM, dan cerita di balik pengembangan A³-Project.',
+      btnDownload: '↓ Cek update',
+      btnTelegram: 'Join Telegram →',
       sectionTitle: 'Update terbaru',
       entriesLabel: (n) => n + ' entri',
-      footerTagline: 'ForgeOS — dibangun komunitas, untuk semua perangkat.',
-      termLine: '&gt; membaca posts.json...',
-      loadError: 'Gagal memuat posts.json. Pastikan file ini dibuka lewat server lokal (bukan file://), dan sudah menjalankan <b style="color:var(--text)">node build-posts.js</b>.',
+      footerTagline: 'A³-Project - simple, stable, and evolving',
+      termLine: '&gt; memuat update ...',
+      loadError: 'Gagal memuat blog. Pastikan koneksi internet tersedia dan server berjalan dengan baik, lalu coba muat ulang halaman.',
       monthsShort: ['Jan','Feb','Mar','Apr','Mei','Jun','Jul','Agu','Sep','Okt','Nov','Des'],
       months: ['Januari','Februari','Maret','April','Mei','Juni','Juli','Agustus','September','Oktober','November','Desember'],
     },
     en: {
-      navLabel: 'update log',
-      eyebrow: 'Release history',
-      heroTitle: 'Every update, newest first',
-      heroDesc: 'Every build, hotfix, and change to ForgeOS is logged here — sorted by release date.',
-      btnDownload: '↓ Download latest build',
+      navLabel: 'Blog',
+      eyebrow: 'A³=Project',
+      heroTitle: 'Simple, stable, always evolving.',
+      heroDesc: 'Discover the latest news, ROM updates, and stories behind the development of A³-Project.',
+      btnDownload: '↓ Check updates',
       btnTelegram: 'Join Telegram',
       sectionTitle: 'Latest updates',
       entriesLabel: (n) => n + (n === 1 ? ' entry' : ' entries'),
-      footerTagline: 'ForgeOS — built by the community, for every device.',
-      termLine: '&gt; reading posts.json...',
-      loadError: 'Failed to load posts.json. Make sure this file is opened via a local server (not file://), and that you\'ve run <b style="color:var(--text)">node build-posts.js</b>.',
+      footerTagline: 'A³-Project - simple, stable, and evolving.',
+      termLine: '&gt; loading updates ...',
+      loadError: 'Failed to load the blog. Make sure your internet connection is available and the server is running properly, then try reloading the page.',
       monthsShort: ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'],
       months: ['January','February','March','April','May','June','July','August','September','October','November','December'],
     },
@@ -566,10 +565,10 @@
   /* ---------- HERO TERMINAL ---------- */
   const lines = [
     { html: '<span class="prompt">$</span> git log --oneline releases', delay: 0 },
-    { html: '<span class="hash">a13f2e9</span> <b>v3.2</b> — kamera &amp; power hal <span class="ok">✓</span>', delay: 500 },
+    /*{ html: '<span class="hash">a13f2e9</span> <b>v3.2</b> — kamera &amp; power hal <span class="ok">✓</span>', delay: 500 },
     { html: '<span class="hash">7c2b9d1</span> <b>v3.1</b> — hotfix haptic', delay: 800 },
-    { html: '<span class="hash">4e8a015</span> <b>v2.0</b> — rosy archived', delay: 1100 },
-    { html: '&gt; membaca posts.json...', delay: 1450, id: 'term-last-line' },
+    { html: '<span class="hash">4e8a015</span> <b>v2.0</b> — rosy archived', delay: 1100 },*/
+    { html: '&gt; memuat update ...', delay: 1450, id: 'term-last-line' },
   ];
   const term = document.getElementById('term');
   const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
