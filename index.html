@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>A³-Project — Log Update</title>
+<title>A³-Project</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700;800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
 <style>
@@ -23,6 +23,24 @@
     --mono: 'JetBrains Mono', monospace;
     --sans: 'Inter', sans-serif;
   }
+
+  [data-theme="dark"]{
+    --bg: #0B0E14;
+    --surface: #12151F;
+    --surface-2: #171B27;
+    --border: #262B38;
+    --text: #E4E7F0;
+    --text-muted: #9096A3;
+    --text-dim: #5B6172;
+    --accent: #8B85FF;
+    --accent-2: #A39DFF;
+    --cta: #FF8158;
+    --cta-2: #FF9773;
+    --ok: #34D399;
+  }
+
+  html{ transition: background .15s ease; }
+  body{ transition: background .15s ease, color .15s ease; }
 
   *{ margin:0; padding:0; box-sizing:border-box; }
 
@@ -54,6 +72,69 @@
   }
   .brand{ color: var(--text); font-weight: 700; letter-spacing: 0.02em; }
   .brand span{ color: var(--accent); }
+
+  .nav-right{
+    display:flex;
+    align-items:center;
+    gap: 14px;
+  }
+
+  /* ---------- THEME TOGGLE (single circle) ---------- */
+  .theme-toggle{
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    border: 1px solid var(--border);
+    background: var(--surface-2);
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    font-size: 14px;
+    line-height: 1;
+    cursor: pointer;
+    transition: border-color .15s ease, transform .15s ease, background .15s ease;
+  }
+  .theme-toggle:hover{ border-color: var(--accent); }
+  .theme-toggle:active{ transform: scale(0.92); }
+  .theme-toggle{ color: var(--text-muted); }
+  .theme-toggle:hover{ color: var(--accent); }
+  #theme-icon{ display:flex; }
+  .lang-btn svg{ display:block; border-radius:50%; }
+
+  /* ---------- LANGUAGE SWITCH (pill) ---------- */
+  .lang-switch{
+    display:flex;
+    align-items:center;
+    gap: 2px;
+    background: var(--surface-2);
+    border: 1px solid var(--border);
+    border-radius: 999px;
+    padding: 3px;
+  }
+  .lang-btn{
+    width: 30px;
+    height: 24px;
+    border-radius: 999px;
+    border: none;
+    padding: 0;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    font-size: 15px;
+    line-height: 1;
+    background: transparent;
+    cursor: pointer;
+    filter: grayscale(1);
+    opacity: 0.4;
+    transition: filter .15s ease, opacity .15s ease, background .15s ease, box-shadow .15s ease;
+  }
+  .lang-btn:hover{ opacity: 0.7; }
+  .lang-btn.active{
+    filter: grayscale(0);
+    opacity: 1;
+    background: var(--surface);
+    box-shadow: 0 1px 4px rgba(20,20,50,0.12);
+  }
 
   /* ---------- HERO ---------- */
   .hero{ padding: 52px 0 44px; }
@@ -326,8 +407,33 @@
 
 <nav>
   <div class="wrap">
-    <div class="brand">A³<span>Project</span></div>
-    <div>log update</div>
+    <div class="brand">A³<span>-Project</span></div>
+    <div class="nav-right">
+      <div id="nav-label">Blog</div>
+      <button class="theme-toggle" id="theme-toggle" title="Ganti tema" onclick="toggleTheme()">
+        <span id="theme-icon"></span>
+      </button>
+      <div class="lang-switch">
+        <button class="lang-btn" id="lang-id" title="Bahasa Indonesia" onclick="setLang('id')">
+          <svg viewBox="0 0 32 32" width="18" height="18" aria-hidden="true">
+            <circle cx="16" cy="16" r="16" fill="#fff"/>
+            <path d="M0 16a16 16 0 0 1 32 0z" fill="#E70011"/>
+          </svg>
+        </button>
+        <button class="lang-btn" id="lang-en" title="English" onclick="setLang('en')">
+          <svg viewBox="0 0 32 32" width="18" height="18" aria-hidden="true">
+            <defs><clipPath id="ukClip"><circle cx="16" cy="16" r="16"/></clipPath></defs>
+            <g clip-path="url(#ukClip)">
+              <rect width="32" height="32" fill="#00247D"/>
+              <path d="M0 0L32 32M32 0L0 32" stroke="#fff" stroke-width="6"/>
+              <path d="M0 0L32 32M32 0L0 32" stroke="#CF142B" stroke-width="2.4"/>
+              <path d="M16 0V32M0 16H32" stroke="#fff" stroke-width="10"/>
+              <path d="M16 0V32M0 16H32" stroke="#CF142B" stroke-width="6"/>
+            </g>
+          </svg>
+        </button>
+      </div>
+    </div>
   </div>
 </nav>
 
@@ -342,14 +448,14 @@
     </div>
 
     <div class="hero-copy">
-      <div class="eyebrow">Riwayat rilis</div>
-      <h1>Semua update, terurut dari yang terbaru</h1>
-      <p>Setiap build, hotfix, dan perubahan A³-Project tercatat di sini — urut berdasarkan tanggal rilis.</p>
+      <div class="eyebrow" id="hero-eyebrow">A³-Project</div>
+      <h1 id="hero-title">Simple, stable, always evolving.</h1>
+      <p id="hero-desc">Temukan berita terbaru, update ROM, dan cerita di balik pengembangan A³-Project.</p>
     </div>
 
     <div class="cta-row">
-      <a href="#log" class="btn btn-primary">↓ Unduh build terbaru</a>
-      <a href="#" class="btn btn-ghost">Gabung Telegram</a>
+      <a href="#log" class="btn btn-primary" id="btn-download">↓ Unduh build terbaru</a>
+      <a href="https://t.me/a3discussion" class="btn btn-ghost" id="btn-telegram">Gabung Telegram</a>
     </div>
   </div>
 </header>
@@ -357,7 +463,7 @@
 <section class="log-section" id="log">
   <div class="wrap">
     <div class="section-head">
-      <h2>Update terbaru</h2>
+      <h2 id="section-title">Update terbaru</h2>
       <span class="tag" id="entry-count">8 entri</span>
     </div>
 
@@ -374,18 +480,96 @@
       <a href="#">Telegram</a>
       <a href="#">XDA</a>
     </div>
-    <div>A³-Project — dibangun komunitas, untuk semua perangkat.</div>
+    <div id="footer-tagline">ForgeOS — dibangun komunitas, untuk semua perangkat.</div>
   </div>
 </footer>
 
 <script>
+  /* ---------- I18N ---------- */
+  const I18N = {
+    id: {
+      navLabel: 'log update',
+      eyebrow: 'Riwayat rilis',
+      heroTitle: 'Semua update, terurut dari yang terbaru',
+      heroDesc: 'Setiap build, hotfix, dan perubahan ForgeOS tercatat di sini — urut berdasarkan tanggal rilis.',
+      btnDownload: '↓ Unduh build terbaru',
+      btnTelegram: 'Gabung Telegram',
+      sectionTitle: 'Update terbaru',
+      entriesLabel: (n) => n + ' entri',
+      footerTagline: 'ForgeOS — dibangun komunitas, untuk semua perangkat.',
+      termLine: '&gt; membaca posts.json...',
+      loadError: 'Gagal memuat posts.json. Pastikan file ini dibuka lewat server lokal (bukan file://), dan sudah menjalankan <b style="color:var(--text)">node build-posts.js</b>.',
+      monthsShort: ['Jan','Feb','Mar','Apr','Mei','Jun','Jul','Agu','Sep','Okt','Nov','Des'],
+      months: ['Januari','Februari','Maret','April','Mei','Juni','Juli','Agustus','September','Oktober','November','Desember'],
+    },
+    en: {
+      navLabel: 'update log',
+      eyebrow: 'Release history',
+      heroTitle: 'Every update, newest first',
+      heroDesc: 'Every build, hotfix, and change to ForgeOS is logged here — sorted by release date.',
+      btnDownload: '↓ Download latest build',
+      btnTelegram: 'Join Telegram',
+      sectionTitle: 'Latest updates',
+      entriesLabel: (n) => n + (n === 1 ? ' entry' : ' entries'),
+      footerTagline: 'ForgeOS — built by the community, for every device.',
+      termLine: '&gt; reading posts.json...',
+      loadError: 'Failed to load posts.json. Make sure this file is opened via a local server (not file://), and that you\'ve run <b style="color:var(--text)">node build-posts.js</b>.',
+      monthsShort: ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'],
+      months: ['January','February','March','April','May','June','July','August','September','October','November','December'],
+    },
+  };
+
+  let currentLang = 'id';
+  let currentTheme = 'light';
+
+  const SUN_SVG = '<svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="4"/><line x1="12" y1="2" x2="12" y2="4"/><line x1="12" y1="20" x2="12" y2="22"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="2" y1="12" x2="4" y2="12"/><line x1="20" y1="12" x2="22" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg>';
+  const MOON_SVG = '<svg viewBox="0 0 24 24" width="16" height="16" fill="currentColor"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>';
+
+  function t(key){ return I18N[currentLang][key]; }
+
+  function applyThemeIcon(){
+    document.getElementById('theme-icon').innerHTML = currentTheme === 'dark' ? MOON_SVG : SUN_SVG;
+  }
+
+  function toggleTheme(){
+    currentTheme = currentTheme === 'light' ? 'dark' : 'light';
+    document.documentElement.setAttribute('data-theme', currentTheme);
+    applyThemeIcon();
+  }
+
+  function applyStaticText(){
+    document.documentElement.lang = currentLang;
+    document.getElementById('nav-label').textContent = t('navLabel');
+    document.getElementById('hero-eyebrow').textContent = t('eyebrow');
+    document.getElementById('hero-title').textContent = t('heroTitle');
+    document.getElementById('hero-desc').textContent = t('heroDesc');
+    document.getElementById('btn-download').textContent = t('btnDownload');
+    document.getElementById('btn-telegram').textContent = t('btnTelegram');
+    document.getElementById('section-title').textContent = t('sectionTitle');
+    document.getElementById('footer-tagline').textContent = t('footerTagline');
+    document.getElementById('lang-id').classList.toggle('active', currentLang === 'id');
+    document.getElementById('lang-en').classList.toggle('active', currentLang === 'en');
+    const termLast = document.getElementById('term-last-line');
+    if(termLast) termLast.innerHTML = t('termLine');
+  }
+
+  function setLang(lang){
+    if(lang === currentLang) return;
+    currentLang = lang;
+    applyStaticText();
+    if(posts.length){
+      document.getElementById('entry-count').textContent = t('entriesLabel')(posts.length);
+      renderPage(currentPage);
+    }
+  }
+
   /* ---------- HERO TERMINAL ---------- */
   const lines = [
     { html: '<span class="prompt">$</span> git log --oneline releases', delay: 0 },
     { html: '<span class="hash">a13f2e9</span> <b>v3.2</b> — kamera &amp; power hal <span class="ok">✓</span>', delay: 500 },
     { html: '<span class="hash">7c2b9d1</span> <b>v3.1</b> — hotfix haptic', delay: 800 },
     { html: '<span class="hash">4e8a015</span> <b>v2.0</b> — rosy archived', delay: 1100 },
-    { html: '&gt; menampilkan 8 dari 8 entri', delay: 1450 },
+    { html: '&gt; membaca posts.json...', delay: 1450, id: 'term-last-line' },
   ];
   const term = document.getElementById('term');
   const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
@@ -394,6 +578,7 @@
     lines.forEach(l => {
       const div = document.createElement('div');
       div.className = 'line show';
+      if(l.id) div.id = l.id;
       div.innerHTML = l.html;
       term.appendChild(div);
     });
@@ -405,6 +590,7 @@
       setTimeout(() => {
         const div = document.createElement('div');
         div.className = 'line';
+        if(l.id) div.id = l.id;
         div.innerHTML = l.html;
         term.appendChild(div);
         requestAnimationFrame(() => div.classList.add('show'));
@@ -418,22 +604,40 @@
   }
 
   /* ---------- BLOG LIST + PAGINATION ---------- */
-  const posts = [
-    { hash: 'a13f2e9', date: '30 Agu 2026', month: 'Agustus 2026', title: 'A³-Project v3.2 — perbaikan kamera & power HAL', excerpt: 'Resolusi foto 18:9 diperbaiki, power HAL disesuaikan dengan powerhint.json, dukungan SUSFS terbaru untuk KernelSU-Next.', device: 'x00td', tag: 'terbaru', tagClass: 'new', latest: true },
-    { hash: '7c2b9d1', date: '12 Jul 2026', month: 'Juli 2026', title: 'A³-Project v3.1 — hotfix haptic & status bar', excerpt: 'Menambal getaran haptic yang tidak konsisten saat charging serta lag pada animasi status bar setelah reboot.', device: 'x00td', tag: 'hotfix', tagClass: '' },
-    { hash: '4e8a015', date: '03 Jun 2026', month: 'Juni 2026', title: 'A³-Project v2.0 untuk Redmi 5 — build arsip', excerpt: 'Rilis terakhir untuk rosy sebelum masuk status archived. Masih dapat diunduh untuk keperluan referensi.', device: 'rosy', tag: 'arsip', tagClass: '' },
-    { hash: 'f091b3a', date: '18 Apr 2026', month: 'April 2026', title: 'A³-Project v3.0 — rebase Android 14', excerpt: 'Rilis besar pertama berbasis Android 14 untuk X00TD, membawa base kernel dan vendor blob yang diperbarui total.', device: 'x00td', tag: 'rilis besar', tagClass: 'ok' },
-    { hash: 'b7d4c02', date: '02 Mar 2026', month: 'Maret 2026', title: 'A³-Project v2.5 — perbaikan modem & sensor', excerpt: 'Menambal drop sinyal pada beberapa operator serta kalibrasi ulang sensor proximity.', device: 'x00td', tag: 'hotfix', tagClass: '' },
-    { hash: '9a1e6f3', date: '14 Jan 2026', month: 'Januari 2026', title: 'A³-Project v2.4 — optimasi baterai', excerpt: 'Penyesuaian governor CPU dan doze mode untuk daya tahan baterai yang lebih baik di X00TD.', device: 'x00td', tag: 'hotfix', tagClass: '' },
-    { hash: '2c58ad0', date: '20 Nov 2025', month: 'November 2025', title: 'A³-Project v2.3 untuk Redmi 5 — dukungan SafetyNet', excerpt: 'Menambahkan dukungan SafetyNet dan Play Integrity untuk rosy.', device: 'rosy', tag: 'fitur baru', tagClass: '' },
-    { hash: '61fbb9e', date: '05 Sep 2025', month: 'September 2025', title: 'A³-Project v2.0 — rilis awal X00TD', excerpt: 'Build resmi pertama A³-Project untuk ASUS ZenFone Max Pro M1, berbasis Android 13.', device: 'x00td', tag: 'rilis besar', tagClass: 'ok' },
-  ];
+  // Daftar post TIDAK ditulis manual di sini. Sumbernya adalah posts.json,
+  // yang otomatis dibuat oleh build-posts.js dari nama file di folder posts/
+  // (format wajib: yyyymmddhhmm.html, contoh: 202608301510.html).
+  // Jalankan `node build-posts.js` setiap kali menambah/menghapus post.
 
   const PER_PAGE = 5;
-  const totalPages = Math.ceil(posts.length / PER_PAGE);
+  let posts = [];
+  let totalPages = 1;
   let currentPage = 1;
 
-  document.getElementById('entry-count').textContent = posts.length + ' entri';
+  async function loadPosts(){
+    try{
+      const res = await fetch('posts.json', { cache: 'no-store' });
+      if(!res.ok) throw new Error('posts.json tidak ditemukan (status ' + res.status + ')');
+      posts = await res.json();
+    }catch(err){
+      document.getElementById('log-list').innerHTML =
+        `<p style="font-family:var(--mono);font-size:13px;color:var(--text-dim);padding:16px 0;">${t('loadError')}</p>`;
+      document.getElementById('entry-count').textContent = t('entriesLabel')(0);
+      return;
+    }
+
+    totalPages = Math.max(1, Math.ceil(posts.length / PER_PAGE));
+    document.getElementById('entry-count').textContent = t('entriesLabel')(posts.length);
+    renderPage(1);
+  }
+
+  function formatDate(post){
+    const dd = String(post.day).padStart(2, '0');
+    return `${dd} ${t('monthsShort')[post.monthIndex]} ${post.year}`;
+  }
+  function formatMonthLabel(post){
+    return `${t('months')[post.monthIndex]} ${post.year}`;
+  }
 
   function renderPage(page){
     currentPage = page;
@@ -445,23 +649,24 @@
     let lastMonth = null;
 
     pagePosts.forEach(post => {
-      if(post.month !== lastMonth){
+      const monthLabel = formatMonthLabel(post);
+      if(monthLabel !== lastMonth){
         const label = document.createElement('div');
         label.className = 'month-label';
-        label.textContent = post.month;
+        label.textContent = monthLabel;
         list.appendChild(label);
-        lastMonth = post.month;
+        lastMonth = monthLabel;
       }
       const a = document.createElement('a');
-      a.href = '#';
+      a.href = post.url;
       a.className = 'entry' + (post.latest ? ' latest' : '');
       a.innerHTML = `
-        <div class="entry-top"><span class="hash">#${post.hash}</span><span>${post.date}</span></div>
-        <h3>${post.title}</h3>
-        <p>${post.excerpt}</p>
+        <div class="entry-top"><span class="hash">#${post.filename.replace('.html','')}</span><span>${formatDate(post)}</span></div>
+        <h3>${post.title[currentLang]}</h3>
+        <p>${post.excerpt[currentLang]}</p>
         <div class="entry-tags">
           <span class="pill device">${post.device}</span>
-          <span class="pill ${post.tagClass}">${post.tag}</span>
+          <span class="pill ${post.tagClass}">${post.tag[currentLang]}</span>
         </div>
       `;
       list.appendChild(a);
@@ -501,7 +706,9 @@
     nav.appendChild(next);
   }
 
-  renderPage(1);
+  applyThemeIcon();
+  applyStaticText();
+  loadPosts();
 </script>
 
 </body>
