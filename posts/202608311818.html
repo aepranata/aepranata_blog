@@ -1,0 +1,475 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>LineageOS 23.2 - Unofficial</title>
+
+<meta name="title-id" content="LineageOS 23.2 GMS - Unofficial">
+<meta name="title-en" content="LineageOS 23.2 GMS - Unofficial">
+<meta name="excerpt-id" content="LineageOS dengan beberapa aplikasi Google, seperti Chrome, Dialer, Gmail, Maps, Photos, dan Play Store.">
+<meta name="excerpt-en" content="LineageOS with essential Google apps, including Chrome, Dialer, Gmail, Maps, Photos, and Play Store.">
+<meta name="device" content="X00TD">
+<meta name="tag-id" content="stabil">
+<meta name="tag-en" content="stable">
+<meta name="tag-class" content="new">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700;800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg: #F6F7FB;
+    --surface: #FFFFFF;
+    --surface-2: #EEF0F6;
+    --border: #E2E4ED;
+    --text: #12141C;
+    --text-muted: #565A68;
+    --text-dim: #9498A6;
+    --accent: #4F46E5;
+    --accent-2: #6D63F2;
+    --cta: #FF6A3D;
+    --cta-2: #FF8158;
+    --ok: #17A768;
+    --add: #17A768;
+    --remove: #E0503A;
+    --mono: 'JetBrains Mono', monospace;
+    --sans: 'Inter', sans-serif;
+  }
+
+  [data-theme="dark"]{
+    --bg: #0B0E14;
+    --surface: #12151F;
+    --surface-2: #171B27;
+    --border: #262B38;
+    --text: #E4E7F0;
+    --text-muted: #9096A3;
+    --text-dim: #5B6172;
+    --accent: #8B85FF;
+    --accent-2: #A39DFF;
+    --cta: #FF8158;
+    --cta-2: #FF9773;
+    --ok: #34D399;
+    --add: #34D399;
+    --remove: #FF7A6E;
+  }
+
+  html{ transition: background .15s ease; }
+  body{ transition: background .15s ease, color .15s ease; }
+
+  *{ margin:0; padding:0; box-sizing:border-box; }
+
+  body{
+    background: var(--bg);
+    color: var(--text);
+    font-family: var(--sans);
+    line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  a{ color: inherit; }
+
+  .wrap{
+    max-width: 720px;
+    margin: 0 auto;
+    padding: 0 24px;
+  }
+
+  /* ---------- NAV ---------- */
+  nav{ padding: 28px 0 0; }
+  nav .wrap{
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    font-family: var(--mono);
+    font-size: 13px;
+    color: var(--text-muted);
+  }
+  .brand{ color: var(--text); font-weight: 700; letter-spacing: 0.02em; text-decoration:none; }
+  .brand span{ color: var(--accent); }
+  .back-link{
+    text-decoration:none;
+    color: var(--text-muted);
+    display:flex;
+    align-items:center;
+    gap: 6px;
+  }
+  .back-link:hover{ color: var(--accent); }
+
+  .nav-right{ display:flex; align-items:center; gap: 14px; }
+
+  .theme-toggle{
+    width: 30px; height: 30px; border-radius: 50%;
+    border: 1px solid var(--border); background: var(--surface-2);
+    display:flex; align-items:center; justify-content:center;
+    cursor: pointer; color: var(--text-muted);
+    transition: border-color .15s ease, transform .15s ease, color .15s ease;
+  }
+  .theme-toggle:hover{ border-color: var(--accent); color: var(--accent); }
+  .theme-toggle:active{ transform: scale(0.92); }
+
+  .lang-switch{
+    display:flex; align-items:center; gap: 2px;
+    background: var(--surface-2); border: 1px solid var(--border);
+    border-radius: 999px; padding: 3px;
+  }
+  .lang-btn{
+    width: 30px; height: 24px; border-radius: 999px; border:none; padding:0;
+    display:flex; align-items:center; justify-content:center;
+    background: transparent; cursor:pointer;
+    filter: grayscale(1); opacity: 0.4;
+    transition: filter .15s ease, opacity .15s ease, background .15s ease, box-shadow .15s ease;
+  }
+  .lang-btn:hover{ opacity: 0.7; }
+  .lang-btn.active{ filter: grayscale(0); opacity: 1; background: var(--surface); box-shadow: 0 1px 4px rgba(20,20,50,0.12); }
+  .lang-btn svg{ display:block; border-radius:50%; }
+
+  /* ---------- HERO ---------- */
+  .hero{ padding: 40px 0 40px; }
+  .terminal{
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    overflow: hidden;
+    box-shadow: 0 20px 40px -24px rgba(20,20,50,0.12);
+  }
+  .terminal-bar{
+    display:flex; align-items:center; gap:8px;
+    padding: 12px 16px; border-bottom: 1px solid var(--border); background: var(--surface-2);
+  }
+  .dot{ width:9px; height:9px; border-radius:50%; background: #D3D6E0; }
+  .terminal-bar .path{ margin-left: 10px; font-family: var(--mono); font-size: 12px; color: var(--text-dim); }
+  .terminal-body{ padding: 20px; font-family: var(--mono); font-size: 13px; }
+  .terminal-body .line{ color: var(--text-muted); margin-bottom: 2px; }
+  .terminal-body .line .prompt{ color: var(--cta); font-weight: 700; }
+  .terminal-body .line b{ color: var(--text); font-weight: 600; }
+  .terminal-body .line .ok{ color: var(--ok); }
+  .cursor{
+    display:inline-block; width: 7px; height: 14px; background: var(--cta);
+    vertical-align: -2px; animation: blink 1s step-end infinite;
+  }
+  @keyframes blink{ 50%{ opacity:0; } }
+
+  .hero-copy{ margin-top: 26px; }
+  .hero-copy .eyebrow{
+    font-family: var(--mono); font-size: 12px; color: var(--accent);
+    letter-spacing: 0.08em; text-transform: uppercase; font-weight: 600;
+  }
+  .hero-copy h1{
+    font-family: var(--mono); font-weight: 800;
+    font-size: clamp(24px, 4.5vw, 34px); line-height: 1.2;
+    margin: 10px 0 12px; letter-spacing: -0.01em;
+  }
+  .hero-copy p{ color: var(--text-muted); font-size: 15px; max-width: 58ch; }
+
+  .cta-row{ display:flex; gap: 12px; margin-top: 22px; flex-wrap: wrap; }
+  .btn{
+    font-family: var(--mono); font-size: 13px; padding: 12px 18px; border-radius: 7px;
+    text-decoration:none; display:inline-flex; align-items:center; gap: 8px;
+    border: 1px solid transparent; cursor: pointer; font-weight: 600;
+  }
+  .btn-primary{ background: var(--cta); color: #fff; box-shadow: 0 10px 22px -10px rgba(255,106,61,0.55); }
+  .btn-primary:hover{ background: var(--cta-2); }
+  .btn-ghost{ border-color: var(--border); color: var(--text); background: var(--surface); }
+  .btn-ghost:hover{ border-color: var(--accent); color: var(--accent); }
+
+  /* ---------- SECTIONS ---------- */
+  section{ padding: 36px 0; border-top: 1px solid var(--border); }
+  .section-head{ display:flex; align-items: baseline; justify-content: space-between; margin-bottom: 18px; }
+  .section-head h2{ font-family: var(--mono); font-size: 15px; font-weight: 700; color: var(--text); }
+  .section-head .tag{ font-family: var(--mono); font-size: 11px; color: var(--text-dim); }
+
+  /* ---------- CHANGELOG DIFF ---------- */
+  .diff{ background: var(--surface); border: 1px solid var(--border); border-radius: 8px; font-family: var(--mono); font-size: 13.5px; overflow: hidden; }
+  .diff-file{ padding: 10px 16px; color: var(--text-dim); border-bottom: 1px solid var(--border); font-size: 12px; }
+  .diff-line{ display:flex; gap: 12px; padding: 8px 16px; border-bottom: 1px solid var(--border); }
+  .diff-line:last-child{ border-bottom:none; }
+  .diff-line .mark{ width: 12px; flex-shrink:0; }
+  .diff-line.add .mark, .diff-line.add span.txt{ color: var(--add); }
+  .diff-line.rm .mark, .diff-line.rm span.txt{ color: var(--remove); }
+  .diff-line .txt{ color: var(--text); }
+
+  /* ---------- COMPAT TABLE ---------- */
+  .getvar{ background: var(--surface); border: 1px solid var(--border); border-radius: 8px; font-family: var(--mono); font-size: 13.5px; padding: 4px 0; }
+  .getvar-row{ display:flex; padding: 11px 18px; border-bottom: 1px solid var(--border); }
+  .getvar-row:last-child{ border-bottom:none; }
+  .getvar-row .k{ width: 150px; color: var(--text-dim); flex-shrink:0; }
+  .getvar-row .v{ color: var(--text); }
+  .getvar-row .v.ok{ color: var(--ok); }
+
+  /* ---------- STEPS ---------- */
+  .steps{ counter-reset: step; }
+  .step{ display:flex; gap: 16px; padding: 16px 0; border-bottom: 1px solid var(--border); }
+  .step:last-child{ border-bottom:none; }
+  .step-num{ counter-increment: step; font-family: var(--mono); font-size: 13px; color: var(--cta); flex-shrink:0; width: 24px; }
+  .step-num::before{ content: counter(step, decimal-leading-zero); }
+  .step-body h3{ font-size: 14.5px; font-weight: 600; margin-bottom: 3px; }
+  .step-body p{ color: var(--text-muted); font-size: 13.5px; }
+
+  /* ---------- FOOTER ---------- */
+  footer{ padding: 32px 0 48px; border-top: 1px solid var(--border); font-family: var(--mono); font-size: 12px; color: var(--text-dim); }
+  .checksum{ background: var(--surface); border: 1px solid var(--border); border-radius: 6px; padding: 12px 14px; margin-bottom: 18px; word-break: break-all; color: var(--text-muted); }
+  .checksum b{ color: var(--text); display:block; margin-bottom: 4px; font-size: 11px; letter-spacing:0.04em; }
+  .footer-links{ display:flex; gap: 18px; margin-bottom: 14px; }
+  .footer-links a{ text-decoration:none; color: var(--text-muted); }
+  .footer-links a:hover{ color: var(--accent); }
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="wrap">
+    <a href="../index.html" class="back-link">
+      <span class="brand">A³<span> Project</span></span>
+    </a>
+    <div class="nav-right">
+      <a href="../index.html" class="back-link" id="back-to-list" style="font-size:12px;"></a>
+      <button class="theme-toggle" id="theme-toggle" title="Ganti tema" onclick="toggleTheme()">
+        <span id="theme-icon"></span>
+      </button>
+      <div class="lang-switch">
+        <button class="lang-btn" id="lang-id" title="Bahasa Indonesia" onclick="setLang('id')">
+          <svg viewBox="0 0 32 32" width="18" height="18" aria-hidden="true">
+            <circle cx="16" cy="16" r="16" fill="#fff"/>
+            <path d="M0 16a16 16 0 0 1 32 0z" fill="#E70011"/>
+          </svg>
+        </button>
+        <button class="lang-btn" id="lang-en" title="English" onclick="setLang('en')">
+          <svg viewBox="0 0 32 32" width="18" height="18" aria-hidden="true">
+            <defs><clipPath id="ukClip"><circle cx="16" cy="16" r="16"/></clipPath></defs>
+            <g clip-path="url(#ukClip)">
+              <rect width="32" height="32" fill="#00247D"/>
+              <path d="M0 0L32 32M32 0L0 32" stroke="#fff" stroke-width="6"/>
+              <path d="M0 0L32 32M32 0L0 32" stroke="#CF142B" stroke-width="2.4"/>
+              <path d="M16 0V32M0 16H32" stroke="#fff" stroke-width="10"/>
+              <path d="M16 0V32M0 16H32" stroke="#CF142B" stroke-width="6"/>
+            </g>
+          </svg>
+        </button>
+      </div>
+    </div>
+  </div>
+</nav>
+
+<header class="hero">
+  <div class="wrap">
+    <div class="terminal">
+      <div class="terminal-bar">
+        <div class="dot"></div><div class="dot"></div><div class="dot"></div>
+        <div class="path">~/releases/X00TD</div>
+      </div>
+      <div class="terminal-body" id="term"></div>
+    </div>
+
+    <div class="hero-copy">
+      <div class="eyebrow" id="eyebrow"></div>
+      <h1 id="post-title"></h1>
+      <p id="post-desc"></p>
+    </div>
+
+    <div class="cta-row">
+      <a href="https://devuploads.com/vp2o3wqvmhd8" class="btn btn-primary" id="btn-download"></a>
+      <a href="#changelog" class="btn btn-ghost" id="btn-changelog"></a>
+    </div>
+  </div>
+</header>
+
+<section id="changelog">
+  <div class="wrap">
+    <div class="section-head">
+      <h2 id="changelog-title"></h2>
+      <span class="tag" id="changelog-meta"></span>
+    </div>
+    <div class="diff">
+      <div class="diff-file">changelog.diff</div>
+      <div id="diff-lines"></div>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="wrap">
+    <div class="section-head">
+      <h2 id="compat-title"></h2>
+      <span class="tag" id="compat-meta">fastboot getvar all</span>
+    </div>
+    <div class="getvar">
+      <div class="getvar-row"><div class="k" id="k-codename"></div><div class="v">X00TD</div></div>
+      <div class="getvar-row"><div class="k" id="k-chipset"></div><div class="v">Qualcomm SDM660 Snapdragon 636</div></div>
+      <div class="getvar-row"><div class="k" id="k-android"></div><div class="v">16</div></div>
+      <div class="getvar-row"><div class="k" id="k-kernel"></div><div class="v">4.19.325-cip135-st19-A³-X00TD-v2</div></div>
+      <div class="getvar-row"><div class="k" id="k-status"></div><div class="v ok" id="v-status"></div></div>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="wrap">
+    <div class="section-head">
+      <h2 id="steps-title"></h2>
+      <span class="tag" id="steps-meta"></span>
+    </div>
+    <div class="steps" id="steps-list"></div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    <div class="checksum">
+      <b>SHA-256</b>
+      8af62f552ae5d296dc8d471c1b3fc9b52f7dfb47acd8d321144fe4de5a587f13
+    </div>
+    <div class="footer-links">
+      <a href="https://github.com/aepranata">GitHub</a>
+      <a href="https://t.me/a3discussion">Telegram</a>
+    </div>
+    <div id="footer-tagline"></div>
+  </div>
+</footer>
+
+<script>
+  /* ---------- DATA KHUSUS POST INI ---------- */
+  const PAGE_DATA = {
+    version: "23.2",
+    hash: "202608311818",
+    device: "X00TD",
+    buildDate: { id: "31 Agustus 2026", en: "August 31, 2026" },
+    buildTime: "10:41",
+    android: "16",
+    kernel: "4.19.325-cip135-st19-A³-X00TD-v2",
+    status: { id: "awal", en: "initial" },
+    title: { id: "LineageOS 23.2 - Unofficial", en: "LineageOS 23.2 - Uofficial" },
+    excerpt: { id: "LineageOS dengan beberapa aplikasi Google, seperti Chrome, Dialer, Gmail, Maps, Photos, dan Play Store.", en: "LineageOS with essential Google apps, including Chrome, Dialer, Gmail, Maps, Photos, and Play Store." },
+    changelog: [{"type": "add", "id": "Sinkronkan dengan sumber terbaru", "en": "Sync with lastest source"}]
+  };
+
+  /* ---------- I18N (teks tetap situs) ---------- */
+  const I18N = {
+    id: {
+      backToList: '← Semua update',
+      eyebrow: 'Detail rilis',
+      btnDownload: '↓ Unduh build.zip',
+      btnChangelog: 'Lihat changelog',
+      changelogTitle: 'Changelog',
+      compatTitle: 'Kompatibilitas perangkat',
+      stepsTitle: 'Cara flash',
+      stepsMeta: '5 langkah',
+      kCodename: 'codename', kChipset: 'chipset', kAndroid: 'android base', kKernel: 'kernel', kStatus: 'status',
+      footerTagline: 'A³ Project — Simple, stable, always evolving.',
+      steps: [
+        { title: 'Unduh build', body: 'Ambil lineage-23.2-20260831-UNOFFICIAL-X00TD.zip di atas beserta OrangeFox Recovery versi terbaru untuk perangkatmu.' },
+        { title: 'Masuk ke recovery mode', body: 'Matikan perangkat, lalu boot ke recovery lewat kombinasi tombol atau adb reboot recovery.' },
+        { title: 'Backup, lalu wipe', body: 'Backup data penting, kemudian wipe Dalvik, cache, metadata, sebelum flashing build baru.' },
+        { title: 'Flash ROM', body: 'Pilih build.zip lewat menu Install, kemudian Format Data apabila dari rom lain' },
+        { title: 'Reboot system', body: 'Kembali ke menu utama recovery lalu pilih Reboot System. Boot pertama biasanya lebih lama.' },
+      ],
+    },
+    en: {
+      backToList: '← All updates',
+      eyebrow: 'Release detail',
+      btnDownload: '↓ Download build.zip',
+      btnChangelog: 'View changelog',
+      changelogTitle: 'Changelog',
+      compatTitle: 'Device compatibility',
+      stepsTitle: 'How to flash',
+      stepsMeta: '5 steps',
+      kCodename: 'codename', kChipset: 'chipset', kAndroid: 'android base', kKernel: 'kernel', kStatus: 'status',
+      footerTagline: 'A³ Project — Simple, stable, always evolving.',
+      steps: [
+        { title: 'Download the build', body: 'Grab the lineage-23.2-20260831-UNOFFICIAL-X00TD.zip above along with the latest OrangeFox Recovery for your device.' },
+        { title: 'Boot into recovery mode', body: 'Power off the device, then boot into recovery via the button combo or adb reboot recovery.' },
+        { title: 'Back up, then wipe', body: 'Back up anything important, then wipe data/cache before flashing the new build.' },
+        { title: 'Flash the ROM', body: 'Select build.zip from the Install menu, then Format Data if you from others.' },
+        { title: 'Reboot system', body: 'Return to the recovery main menu and pick Reboot System. The first boot usually takes longer.' },
+      ],
+    },
+  };
+
+  let currentLang = 'id';
+  let currentTheme = 'light';
+
+  const SUN_SVG = '<svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="4"/><line x1="12" y1="2" x2="12" y2="4"/><line x1="12" y1="20" x2="12" y2="22"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="2" y1="12" x2="4" y2="12"/><line x1="20" y1="12" x2="22" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg>';
+  const MOON_SVG = '<svg viewBox="0 0 24 24" width="16" height="16" fill="currentColor"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>';
+
+  function t(key){ return I18N[currentLang][key]; }
+
+  function applyThemeIcon(){
+    document.getElementById('theme-icon').innerHTML = currentTheme === 'dark' ? MOON_SVG : SUN_SVG;
+  }
+  function toggleTheme(){
+    currentTheme = currentTheme === 'light' ? 'dark' : 'light';
+    document.documentElement.setAttribute('data-theme', currentTheme);
+    applyThemeIcon();
+  }
+
+  function renderTerminal(){
+    const term = document.getElementById('term');
+    term.innerHTML = `
+      <div class="line"><span class="prompt">$</span> flash-tool --device ${PAGE_DATA.device}</div>
+      <div class="line">&gt; rom     : <b>LineageOS ${PAGE_DATA.version}</b></div>
+      <div class="line">&gt; android : <b>${PAGE_DATA.android}</b></div>
+      <div class="line">&gt; kernel  : <b>${PAGE_DATA.kernel}</b></div>
+      <div class="line">&gt; build   : <b>${PAGE_DATA.buildDate[currentLang]} ${PAGE_DATA.buildTime}</b> <span class="ok">✓</span></div>
+      <div class="line"><span class="cursor"></span></div>
+    `;
+  }
+
+  function renderChangelog(){
+    const box = document.getElementById('diff-lines');
+    box.innerHTML = PAGE_DATA.changelog.map(line => `
+      <div class="diff-line ${line.type === 'add' ? 'add' : 'rm'}">
+        <span class="mark">${line.type === 'add' ? '+' : '−'}</span>
+        <span class="txt">${line[currentLang]}</span>
+      </div>
+    `).join('');
+  }
+
+  function renderSteps(){
+    const box = document.getElementById('steps-list');
+    box.innerHTML = t('steps').map(s => `
+      <div class="step">
+        <div class="step-num"></div>
+        <div class="step-body"><h3>${s.title}</h3><p>${s.body}</p></div>
+      </div>
+    `).join('');
+  }
+
+  function applyStaticText(){
+    document.documentElement.lang = currentLang;
+    document.getElementById('back-to-list').textContent = t('backToList');
+    document.getElementById('eyebrow').textContent = t('eyebrow');
+    document.getElementById('post-title').textContent = PAGE_DATA.title[currentLang];
+    document.getElementById('post-desc').textContent = PAGE_DATA.excerpt[currentLang];
+    document.getElementById('btn-download').textContent = t('btnDownload');
+    document.getElementById('btn-changelog').textContent = t('btnChangelog');
+    document.getElementById('changelog-title').textContent = t('changelogTitle');
+    document.getElementById('changelog-meta').textContent = PAGE_DATA.version + ' · #' + PAGE_DATA.hash;
+    document.getElementById('compat-title').textContent = t('compatTitle');
+    document.getElementById('steps-title').textContent = t('stepsTitle');
+    document.getElementById('steps-meta').textContent = t('stepsMeta');
+    document.getElementById('k-codename').textContent = t('kCodename');
+    document.getElementById('k-chipset').textContent = t('kChipset');
+    document.getElementById('k-android').textContent = t('kAndroid');
+    document.getElementById('k-kernel').textContent = t('kKernel');
+    document.getElementById('k-status').textContent = t('kStatus');
+    document.getElementById('v-status').textContent = PAGE_DATA.status[currentLang];
+    document.getElementById('footer-tagline').textContent = t('footerTagline');
+    document.getElementById('lang-id').classList.toggle('active', currentLang === 'id');
+    document.getElementById('lang-en').classList.toggle('active', currentLang === 'en');
+
+    renderTerminal();
+    renderChangelog();
+    renderSteps();
+  }
+
+  function setLang(lang){
+    if(lang === currentLang) return;
+    currentLang = lang;
+    applyStaticText();
+  }
+
+  applyThemeIcon();
+  applyStaticText();
+</script>
+
+</body>
+</html>

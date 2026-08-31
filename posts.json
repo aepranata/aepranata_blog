@@ -1,0 +1,27 @@
+[
+  {
+    "filename": "202608311818.html",
+    "url": "posts/202608311818.html",
+    "timestamp": "202608311818",
+    "year": 2026,
+    "monthIndex": 7,
+    "day": 31,
+    "hour": "18",
+    "minute": "18",
+    "title": {
+      "id": "LineageOS 23.2 GMS - Unofficial",
+      "en": "LineageOS 23.2 GMS - Unofficial"
+    },
+    "excerpt": {
+      "id": "LineageOS dengan beberapa aplikasi Google, seperti Chrome, Dialer, Gmail, Maps, Photos, dan Play Store.",
+      "en": "LineageOS with essential Google apps, including Chrome, Dialer, Gmail, Maps, Photos, and Play Store."
+    },
+    "tag": {
+      "id": "stabil",
+      "en": "stable"
+    },
+    "device": "X00TD",
+    "tagClass": "new",
+    "latest": true
+  }
+]
