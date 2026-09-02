@@ -558,49 +558,73 @@
     applyStaticText();
     if(posts.length){
       document.getElementById('entry-count').textContent = t('entriesLabel')(posts.length);
+      renderTerminal(posts); // Update terminal saat ganti bahasa
       renderPage(currentPage);
     }
   }
 
   /* ---------- HERO TERMINAL ---------- */
-  const lines = [
-    { html: '<span class="prompt">$</span> git log --oneline releases', delay: 0 },
-    /*{ html: '<span class="hash">a13f2e9</span> <b>v3.2</b> — kamera &amp; power hal <span class="ok">✓</span>', delay: 500 },
-    { html: '<span class="hash">7c2b9d1</span> <b>v3.1</b> — hotfix haptic', delay: 800 },
-    { html: '<span class="hash">4e8a015</span> <b>v2.0</b> — rosy archived', delay: 1100 },*/
-    { html: '&gt; memuat update ...', delay: 1450, id: 'term-last-line' },
-  ];
   const term = document.getElementById('term');
   const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
-  if (reduce) {
-    lines.forEach(l => {
-      const div = document.createElement('div');
-      div.className = 'line show';
-      if(l.id) div.id = l.id;
-      div.innerHTML = l.html;
-      term.appendChild(div);
-    });
-    const cur = document.createElement('span');
-    cur.className = 'cursor';
-    term.appendChild(cur);
-  } else {
-    lines.forEach(l => {
-      setTimeout(() => {
+  function renderTerminal(posts){
+    term.innerHTML = '';
+    
+    const lines = [
+      { html: '<span class="prompt">$</span> git log --oneline releases', delay: 0 }
+    ];
+
+    // Tambahkan 3 postingan terbaru ke terminal
+    if(posts && posts.length > 0){
+      const recentPosts = posts.slice(0, 3);
+      recentPosts.forEach((post, idx) => {
+        const hash = post.hash || 'a1b2c3'; // gunakan hash dari file size
+        const title = post.title[currentLang];
+        const checkmark = post.latest ? ' <span class="ok">✓</span>' : '';
+        lines.push({
+          html: `<span class="hash">${hash}</span> <b>${title}</b>${checkmark}`,
+          delay: 500 + (idx * 300)
+        });
+      });
+      // Tambahkan baris terakhir hanya jika ada posts
+      lines.push({ html: '&gt; ' + t('termLine'), delay: 500 + (recentPosts.length * 300), id: 'term-last-line' });
+    } else {
+      // Jika belum ada posts, tampilkan loading
+      lines.push({ html: '&gt; ' + t('termLine'), delay: 500, id: 'term-last-line' });
+    }
+
+    if (reduce) {
+      lines.forEach(l => {
         const div = document.createElement('div');
-        div.className = 'line';
+        div.className = 'line show';
         if(l.id) div.id = l.id;
         div.innerHTML = l.html;
         term.appendChild(div);
-        requestAnimationFrame(() => div.classList.add('show'));
-      }, l.delay);
-    });
-    setTimeout(() => {
+      });
       const cur = document.createElement('span');
       cur.className = 'cursor';
       term.appendChild(cur);
-    }, 1700);
+    } else {
+      lines.forEach(l => {
+        setTimeout(() => {
+          const div = document.createElement('div');
+          div.className = 'line';
+          if(l.id) div.id = l.id;
+          div.innerHTML = l.html;
+          term.appendChild(div);
+          requestAnimationFrame(() => div.classList.add('show'));
+        }, l.delay);
+      });
+      setTimeout(() => {
+        const cur = document.createElement('span');
+        cur.className = 'cursor';
+        term.appendChild(cur);
+      }, lines[lines.length - 1].delay + 250);
+    }
   }
+
+  // Render terminal dengan loading state dulu
+  ///renderTerminal(null);
 
   /* ---------- BLOG LIST + PAGINATION ---------- */
   // Daftar post TIDAK ditulis manual di sini. Sumbernya adalah posts.json,
@@ -627,6 +651,7 @@
 
     totalPages = Math.max(1, Math.ceil(posts.length / PER_PAGE));
     document.getElementById('entry-count').textContent = t('entriesLabel')(posts.length);
+    renderTerminal(posts); // Render terminal dengan data posts
     renderPage(1);
   }
 

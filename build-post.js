@@ -47,7 +47,13 @@ function build() {
   const posts = files.map((filename, index) => {
     const match = filename.match(FILENAME_RE);
     const [, yyyy, mm, dd, hh, min] = match;
-    const html = fs.readFileSync(path.join(POSTS_DIR, filename), 'utf-8');
+    const filePath = path.join(POSTS_DIR, filename);
+    const html = fs.readFileSync(filePath, 'utf-8');
+    const stats = fs.statSync(filePath);
+    const fileSize = stats.size;
+    
+    // Buat hash dari ukuran file (6 karakter hex)
+    const hash = fileSize.toString(16).padStart(6, '0').substring(0, 6);
 
     return {
       filename,
@@ -58,6 +64,7 @@ function build() {
       day: parseInt(dd, 10),
       hour: hh,
       minute: min,
+      hash: hash,
       title: extractBilingual(html, 'title', '(tanpa judul / untitled)'),
       excerpt: extractBilingual(html, 'excerpt', ''),
       tag: extractBilingual(html, 'tag', ''),
