@@ -1,5 +1,30 @@
 [
   {
+    "filename": "202609022033.html",
+    "url": "posts/202609022033.html",
+    "timestamp": "202609022033",
+    "year": 2026,
+    "monthIndex": 8,
+    "day": 2,
+    "hour": "20",
+    "minute": "33",
+    "title": {
+      "id": "LineageOS 23.2 Vanilla - Unofficial",
+      "en": "LineageOS 23.2 Vanilla - Unofficial"
+    },
+    "excerpt": {
+      "id": "LineageOS tanpa aplikasi Google.",
+      "en": "LineageOS without essential Google apps."
+    },
+    "tag": {
+      "id": "stabil",
+      "en": "stable"
+    },
+    "device": "X00TD",
+    "tagClass": "new",
+    "latest": true
+  },
+  {
     "filename": "202608311818.html",
     "url": "posts/202608311818.html",
     "timestamp": "202608311818",
@@ -22,6 +47,6 @@
     },
     "device": "X00TD",
     "tagClass": "new",
-    "latest": true
+    "latest": false
   }
 ]
