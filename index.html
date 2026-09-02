@@ -559,7 +559,7 @@
     if(posts.length){
       document.getElementById('entry-count').textContent = t('entriesLabel')(posts.length);
       renderTerminal(posts); // Update terminal saat ganti bahasa
-      renderPage(currentPage);
+      renderPage(currentPage, false); // Tidak scroll saat ganti bahasa
     }
   }
 
@@ -652,7 +652,7 @@
     totalPages = Math.max(1, Math.ceil(posts.length / PER_PAGE));
     document.getElementById('entry-count').textContent = t('entriesLabel')(posts.length);
     renderTerminal(posts); // Render terminal dengan data posts
-    renderPage(1);
+    renderPage(1, false); // First load, tidak auto-scroll
   }
 
   function formatDate(post){
@@ -663,7 +663,7 @@
     return `${t('months')[post.monthIndex]} ${post.year}`;
   }
 
-  function renderPage(page){
+  function renderPage(page, shouldScroll = false){
     currentPage = page;
     const start = (page - 1) * PER_PAGE;
     const pagePosts = posts.slice(start, start + PER_PAGE);
@@ -697,7 +697,9 @@
     });
 
     renderPagination();
-    document.getElementById('log').scrollIntoView({ behavior: reduce ? 'auto' : 'smooth', block: 'start' });
+    if(shouldScroll){
+      document.getElementById('log').scrollIntoView({ behavior: reduce ? 'auto' : 'smooth', block: 'start' });
+    }
   }
 
   function renderPagination(){
@@ -709,7 +711,7 @@
     prev.className = 'page-btn nav';
     prev.textContent = '‹';
     if(currentPage === 1) prev.setAttribute('disabled', 'true');
-    prev.onclick = (e) => { e.preventDefault(); if(currentPage > 1) renderPage(currentPage - 1); };
+    prev.onclick = (e) => { e.preventDefault(); if(currentPage > 1) renderPage(currentPage - 1, true); };
     nav.appendChild(prev);
 
     for(let i = 1; i <= totalPages; i++){
@@ -717,7 +719,7 @@
       btn.href = '#';
       btn.className = 'page-btn' + (i === currentPage ? ' active' : '');
       btn.textContent = i;
-      btn.onclick = (e) => { e.preventDefault(); renderPage(i); };
+      btn.onclick = (e) => { e.preventDefault(); renderPage(i, true); };
       nav.appendChild(btn);
     }
 
@@ -726,7 +728,7 @@
     next.className = 'page-btn nav';
     next.textContent = '›';
     if(currentPage === totalPages) next.setAttribute('disabled', 'true');
-    next.onclick = (e) => { e.preventDefault(); if(currentPage < totalPages) renderPage(currentPage + 1); };
+    next.onclick = (e) => { e.preventDefault(); if(currentPage < totalPages) renderPage(currentPage + 1, true); };
     nav.appendChild(next);
   }
 
